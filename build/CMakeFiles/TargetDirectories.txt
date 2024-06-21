@@ -1,4 +1,0 @@
-/Users/lokesh/VectoredgeWorkspace/mocksdk/build/CMakeFiles/MathFunctions.dir
-/Users/lokesh/VectoredgeWorkspace/mocksdk/build/CMakeFiles/Calculator.dir
-/Users/lokesh/VectoredgeWorkspace/mocksdk/build/CMakeFiles/edit_cache.dir
-/Users/lokesh/VectoredgeWorkspace/mocksdk/build/CMakeFiles/rebuild_cache.dir
