@@ -29,16 +29,6 @@ class Trie:
             node = node.children[char]  # Move to the child node
         self.print_trie()  # Print the Trie structure on success
         return node.is_end_of_word  # Return True if the last node is marked as the end of a word, else False
-
-    # Method to check if any word in the Trie starts with a given prefix
-    def starts_with(self, prefix):
-        node = self.root  # Start from the root node
-        for char in prefix:  # Iterate through each character in the prefix
-            if char not in node.children:  # If the character is not in the current node's children
-                return False  # No word in the Trie starts with the given prefix
-            node = node.children[char]  # Move to the child node
-        self.print_trie()  # Print the Trie structure on success
-        return True  # If all characters in the prefix are found, return True
     
     def print_trie(self):
         def dfs(node, prefix):
@@ -59,5 +49,3 @@ trie.insert("world")  # Insert the word "world" into the Trie
 print(trie.search("hello"))  # Output: True, because "hello" is in the Trie
 print(trie.search("zar"))   
 
-print(trie.starts_with("hell"))  # Output: True, because there is a word ("hello") that starts with "hell"
-print(trie.starts_with("worlds"))  # Output: False, because no word in the Trie starts with "worlds"
