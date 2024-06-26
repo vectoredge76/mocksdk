@@ -1,0 +1,101 @@
+# Definition of a TrieNode, which is a single node in the Trie structure
+class TrieNode:
+    def __init__(self):
+        self.children = {}  # Dictionary to hold child nodes, where keys are characters
+        self.fail = None  # Failure link
+        self.output = []  # List to hold patterns that end at this node
+
+# Definition of the Trie data structure with Aho-Corasick functionality
+class AhoCorasick:
+    def __init__(self):
+        self.root = TrieNode()  # Initialize the Trie with a root TrieNode
+
+    # Method to insert a pattern into the Trie
+    def insert(self, pattern):
+        node = self.root  # Start from the root node
+        for char in pattern:  # Iterate through each character in the pattern
+            if char not in node.children:  # If the character is not in the current node's children
+                node.children[char] = TrieNode()  # Create a new TrieNode and add it to the children
+            node = node.children[char]  # Move to the child node
+        node.output.append(pattern)  # Append the pattern to the output list of the last node
+
+    # Method to build failure links for the Aho-Corasick automaton
+    def build_failure_links(self):
+        # Queue for BFS using a list
+        queue = []
+
+        # Initialize the root's children
+        for char, node in self.root.children.items():
+            node.fail = self.root
+            queue.append(node)
+
+        # BFS to build failure links
+        while queue:
+            current_node = queue.pop(0)
+
+            for char, next_node in current_node.children.items():
+                queue.append(next_node)
+
+                # Find the failure link for next_node
+                fail_node = current_node.fail
+                while fail_node is not None and char not in fail_node.children:
+                    fail_node = fail_node.fail
+                next_node.fail = fail_node.children[char] if fail_node else self.root
+
+                # Merge output lists
+                if next_node.fail:
+                    next_node.output += next_node.fail.output
+
+    # Method to search for patterns in the given text
+    def search(self, text):
+        node = self.root
+        occurrences = {}
+
+        for i, char in enumerate(text):
+            while node is not None and char not in node.children:
+                node = node.fail
+            if node is None:
+                node = self.root
+                continue
+            node = node.children[char]
+
+            # If there is any pattern ending at this node, add it to the occurrences
+            for pattern in node.output:
+                if pattern not in occurrences:
+                    occurrences[pattern] = []
+                occurrences[pattern].append(i - len(pattern) + 1)
+
+        return occurrences
+
+    # Helper method to print the Trie structure in a diagram-like format
+    def print_trie(self):
+        def dfs(node, prefix, level):
+            node_repr = ' ' * level + prefix[-1] if prefix else 'Root'
+            if node.output:
+                node_repr += " (output: {})".format(','.join(node.output))
+            print(node_repr)
+            for char, next_node in node.children.items():
+                dfs(next_node, prefix + char, level + 1)
+                
+        print("Current Trie structure:")
+        for char, node in self.root.children.items():
+            dfs(node, char, 0)
+        print("")
+
+# Example usage of the AhoCorasick
+aho_corasick = AhoCorasick()  # Create a new AhoCorasick object
+patterns = ["he", "she", "his", "her"]
+for pattern in patterns:
+    aho_corasick.insert(pattern)  # Insert the pattern into the Trie
+
+aho_corasick.build_failure_links()  # Build the failure links
+
+# Print the Trie structure
+aho_corasick.print_trie()
+
+# Search for patterns in the text
+text = "hell"
+occurrences = aho_corasick.search(text)
+print(f"Occurrences in text '{text}':")
+for pattern, positions in occurrences.items():
+    print(f"Pattern '{pattern}' found at positions {positions}")
