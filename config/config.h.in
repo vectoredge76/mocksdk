@@ -1,0 +1,2 @@
+#define Calculator_VERSION_MAJOR @Calculator_VERSION_MAJOR@
+#define Calculator_VERSION_MINOR @Calculator_VERSION_MINOR@
