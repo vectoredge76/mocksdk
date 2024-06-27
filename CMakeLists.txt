@@ -14,6 +14,7 @@ include_directories(${CMAKE_BINARY_DIR} include)
 # Add external libraries
 find_package(spdlog REQUIRED)
 find_package(yaml-cpp REQUIRED)
+find_package(re2 REQUIRED)
 
 # Add the MathFunctions library
 add_library(MathFunctions src/MathFunctions.cpp)
@@ -22,7 +23,7 @@ add_library(MathFunctions src/MathFunctions.cpp)
 add_executable(Calculator src/main.cpp src/Calculator.cpp src/ConfigReader.cpp)
 
 # Link the MathFunctions library and external libraries
-target_link_libraries(Calculator MathFunctions spdlog::spdlog yaml-cpp)
+target_link_libraries(Calculator MathFunctions spdlog::spdlog yaml-cpp re2::re2)
 
 # Specify C++ standard
 set(CMAKE_CXX_STANDARD 11)
