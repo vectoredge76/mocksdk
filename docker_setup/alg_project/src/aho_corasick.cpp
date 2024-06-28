@@ -151,22 +151,23 @@ int main() {
 	std::vector< std::string > patterns_7 = {"pattern1", "pattern2", "pattern3", "pattern4", "pattern5"};
 	std::string text_7 = "pattern1pattern2pattern3pattern4pattern5pattern1pattern2pattern3pattern4pattern5";
 
-	std::vector< std::string > patterns_8 = {"a.b", "c*d", "e?f"};
-	std::string text_8 = "a.b and c*d and e?f";
-
 	std::vector< std::string > patterns_10 = {"cat", "dog", "fish"};
 	std::string text_10 = "antanddodgeekdadball";
 
-    for (int i = 0; i < patterns_8.size(); i++) {
-        ahoCorasick.insert(patterns_8[i], i);
+    for (int i = 0; i < patterns_4.size(); i++) {
+        ahoCorasick.insert(patterns_4[i], i);
     }
 
     ahoCorasick.buildFailureLinks();
-    std::vector<std::pair<int, int>> results = ahoCorasick.search(text_8);
+    std::vector<std::pair<int, int>> results = ahoCorasick.search(text_4);
 
-    for (auto& result : results) {
-        std::cout << "Pattern found at index " << result.first - patterns_8[result.second].size() + 1
-                  << " for pattern \"" << patterns_8[result.second] << "\"" << std::endl;
+	// the first value printed is the index at which the pattern is found
+	// the second value printed represents the index of the keywords array to signify which keywoprd is found
+    for (std::pair<int, int> result : results) {
+       int res_1 = result.first;
+	   printf("%d ", res_1);
+	   int res_2 = result.second;
+	   printf("%d\n", res_2);
     }
 
     return 0;
