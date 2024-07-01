@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include <string>
+#include "aho_corasick.h"
 
 
 const int MAX_CHARS = 26;

@@ -3,8 +3,6 @@
 #include <queue>
 #include <string>
 
-const int MAX_CHARS;
-
 struct TrieNode {
 	public:
 		TrieNode* children; // 26 possible states for each red
